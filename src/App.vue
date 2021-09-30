@@ -12,22 +12,16 @@
       placeholder="请输入搜索关键词"
       input-align="center"
   />
-  <Index/>
-  <login/>
-  <van-tabbar v-model="active">
-    <van-tabbar-item icon="home-o">标签</van-tabbar-item>
-    <van-tabbar-item icon="search">标签</van-tabbar-item>
-    <van-tabbar-item icon="friends-o">标签</van-tabbar-item>
-    <van-tabbar-item icon="setting-o">标签</van-tabbar-item>
+  <router-view/>
+  <van-tabbar route>
+    <van-tabbar-item to="/index" icon="home-o">标签</van-tabbar-item>
+    <van-tabbar-item to="/messages" icon="chat-o">标签</van-tabbar-item>
+    <van-tabbar-item to="/my" icon="user-circle-o">标签</van-tabbar-item>
   </van-tabbar>
 </template>
 <script>
-import Login from "@/views/Login";
-import Index from "@/views/Index"
 export default {
   components: {
-    Login,
-    Index
   }
 }
 </script>
