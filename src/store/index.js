@@ -4,6 +4,7 @@ import axios from 'axios'
 const asyncAndCommit = async(url, mutationName,
                              commit, config= { method: 'get' }, extraData) => {
   const { data } = await axios(url, config)
+  console.log(data)
   if (extraData) {
     commit(mutationName, { data, extraData })
   } else {
@@ -24,8 +25,6 @@ export default createStore({
   mutations: {
   },
   actions: {
-  },
-  getters:{
     loginAndFetch({ dispatch }, loginData) {
       return dispatch('login', loginData).then(() => {
         return dispatch('fetchCurrentUser')
@@ -34,6 +33,8 @@ export default createStore({
     login({ commit }, payload) {
       return asyncAndCommit('/login', 'login', commit, { method: 'post', data: payload })
     }
+  },
+  getters:{
 
   },
   modules: {
