@@ -3,13 +3,7 @@ import axios from 'axios'
 // eslint-disable-next-line no-unused-vars
 const asyncAndCommit = async(url, mutationName,
                              commit, config= { method: 'get',headers:{'content-type': 'application/json'} }, extraData) => {
-  config["url"]=url
-  console.log(config)
-  const { data } = await axios({
-    url:url,
-    method: config.method,
-    params:config.data
-  })
+  const { data } = await axios(url,config)
 
 
   console.log(data)
@@ -50,7 +44,7 @@ export default createStore({
       return asyncAndCommit('/login', 'login', commit, { method: 'post', num:payload.data.num,page:payload.data.page })
     },
     getHotPassage({commit},payload){
-      return asyncAndCommit('/getHotPassage','getHotPassage',commit,{method: 'get',data:payload})
+      return asyncAndCommit('/getHotPassage','getHotPassage',commit,{method: 'get',params:payload})
     }
   },
   getters:{
