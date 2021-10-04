@@ -2,8 +2,16 @@ import { createStore } from 'vuex'
 import axios from 'axios'
 // eslint-disable-next-line no-unused-vars
 const asyncAndCommit = async(url, mutationName,
-                             commit, config= { method: 'get' }, extraData) => {
-  const { data } = await axios(url, config)
+                             commit, config= { method: 'get',headers:{'content-type': 'application/json'} }, extraData) => {
+  config["url"]=url
+  console.log(config)
+  const { data } = await axios({
+    url:url,
+    method: config.method,
+    params:config.data
+  })
+
+
   console.log(data)
   if (extraData) {
     commit(mutationName, { data, extraData })
@@ -23,15 +31,26 @@ export default createStore({
     chat:{}
   },
   mutations: {
+    login(state,rawData){
+      const token = rawData;
+      state.token = token;
+      localStorage.setItem("token",token);
+    },
+    logout(state){
+      state.token = ''
+      state.user = { isLogin: false }
+      localStorage.remove('token')
+    },
+    getHotPassage(state,rawData){
+      console.log(rawData)
+    }
   },
   actions: {
-    loginAndFetch({ dispatch }, loginData) {
-      return dispatch('login', loginData).then(() => {
-        return dispatch('fetchCurrentUser')
-      })
-    },
     login({ commit }, payload) {
-      return asyncAndCommit('/login', 'login', commit, { method: 'post', data: payload })
+      return asyncAndCommit('/login', 'login', commit, { method: 'post', num:payload.data.num,page:payload.data.page })
+    },
+    getHotPassage({commit},payload){
+      return asyncAndCommit('/getHotPassage','getHotPassage',commit,{method: 'get',data:payload})
     }
   },
   getters:{

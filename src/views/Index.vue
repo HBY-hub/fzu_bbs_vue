@@ -31,10 +31,14 @@
 <script>
 import {defineComponent} from "vue";
 import PassagePre from "@/components/PassagePre";
+import {useStore} from 'vuex'
 export default defineComponent({
   name:"Index",
   components: {PassagePre},
   setup(){
+  const store = useStore()
+    store.dispatch('getHotPassage',{num:"1",page:"1",theme:""})
+
     const typeList = ["失物招领","聊天交友","失物招领","聊天交友","失物招领","聊天交友"];
     for (let i = 0; i < 6; i++) {
       console.log(typeList[i]);
