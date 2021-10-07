@@ -10,11 +10,13 @@
   "dependencies": {
     "axios": "^0.21.4",
     "core-js": "^3.6.5",
+    "mockjs": "^1.1.0",
     "qs": "^6.10.1",
     "vant": "^3.2.4",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0"
+    "vuex": "^4.0.0-0",
+    "yarn": "^1.22.15"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -26,5 +28,19 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0"
-  }
+  },
+  "name": "22_mockjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "mockjs": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "wyj",
+  "license": "ISC"
 }
