@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "axios": "^0.21.4",
@@ -29,18 +30,9 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0"
   },
-  "name": "22_mockjs",
-  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
-  "dependencies": {
-    "mockjs": "^1.1.0"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "wyj",
   "license": "ISC"
 }
