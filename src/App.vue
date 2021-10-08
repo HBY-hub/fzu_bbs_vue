@@ -20,8 +20,18 @@
   </van-tabbar>
 </template>
 <script>
+import axios from 'axios';
+// import  './main';
 export default {
   components: {
+  },
+  created(){
+    axios.get('http://gettest123.com').then(res=>{
+      console.log(res);
+    }) 
+    axios.post('http://posttest123.com').then(res=>{
+      console.log(res);
+    }) 
   }
 }
 </script>
