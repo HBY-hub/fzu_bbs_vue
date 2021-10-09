@@ -8,11 +8,11 @@ var obj = Mock.mock({
 
 
 // console.log(obj)
- 
-Mock.mock('http://gettest123.com','get',()=>{
+
+Mock.mock(new RegExp('http://localhost:8010/getHotPassage.*'),'get',()=>{
     return obj;
 })
 
-Mock.mock('http://posttest123.com','post',()=>{
+Mock.mock('http://gettest123.com','get',()=>{
     return obj;
 })
