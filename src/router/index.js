@@ -32,6 +32,11 @@ const routes = [
     path: '/addPassage',
     name: 'addPassage',
     component:()=>import('../views/AddPassage')
+  },
+  {
+    path: '/chat',
+    name: 'chat',
+    component:()=>import('../views/Chat')
   }
 ]
 

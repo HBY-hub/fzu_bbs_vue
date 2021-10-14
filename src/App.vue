@@ -7,22 +7,32 @@
     @click-left="onClickLeft"
     @click-right="onClickRight"
   />
-  <van-search
-      v-model="value"
-      placeholder="请输入搜索关键词"
-      input-align="center"
-  />
+<!--  <van-search-->
+<!--      v-model="value"-->
+<!--      placeholder="请输入搜索关键词"-->
+<!--      input-align="center"-->
+<!--  />-->
   <router-view/>
-  <van-tabbar route>
+
+  <van-tabbar route v-if="needbuttom">
     <van-tabbar-item to="/index" icon="home-o">标签</van-tabbar-item>
     <van-tabbar-item to="/messages" icon="chat-o">标签</van-tabbar-item>
     <van-tabbar-item to="/my" icon="user-circle-o">标签</van-tabbar-item>
   </van-tabbar>
+
 </template>
 <script>
 import axios from 'axios';
 // import  './main';
 export default {
+  setup(){
+    const uri = window.location;
+    let needbuttom = true;
+    if(uri.pathname==="/chat")needbuttom=false;
+    return{
+      needbuttom
+    }
+  },
   components: {
   },
   created(){
