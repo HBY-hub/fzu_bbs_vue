@@ -29,6 +29,7 @@ export default {
     const uri = window.location;
     let needbuttom = true;
     if(uri.pathname==="/chat")needbuttom=false;
+    if(uri.pathname==="/passage")needbuttom=false;
     return{
       needbuttom
     }
