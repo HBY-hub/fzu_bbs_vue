@@ -12,7 +12,3 @@ var obj = Mock.mock({
 Mock.mock(new RegExp('http://localhost:8010/getHotPassage.*'),'get',()=>{
     return obj;
 })
-
-Mock.mock('http://gettest123.com','get',()=>{
-    return obj;
-})

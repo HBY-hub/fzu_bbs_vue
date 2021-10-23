@@ -26,18 +26,24 @@
 </template>
 <script >
 
-import {defineComponent,ref} from "vue";
+import {defineComponent, ref, toRaw} from "vue";
 import store from '../store/index'
 
 export default defineComponent({
   name: "Login",
   setup() {
+    console.log(toRaw(store.state.user))
+    console.log(toRaw(store.state.token))
     const userName = ref('');
     const password = ref('');
     const onSubmit = (values) => {
       store.dispatch("login",values)
+      console.log(store.state.token)
+      if(store.state.token){
+        store.dispatch("user",store.state.token)
+      }
+      console.log(store.state.user)
     };
-
     return {
       userName,
       password,

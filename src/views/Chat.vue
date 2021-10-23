@@ -25,13 +25,28 @@
   </div>
 </template>
 <script>
-import {defineComponent} from "vue";
+import {defineComponent, toRaw} from "vue";
+import store from '../store/index';
 
 export default defineComponent({
   name: "Chat",
   setup(){
-
-    const sendMsg=()=>{}
+    const socket = new WebSocket("ws://localhost:8010/chat/"+toRaw(store.state.user).id)
+    socket.onopen = ()=>{
+      console.log("opennnnnnnnnnn")
+    }
+    socket.onclose = ()=>{
+      console.log("closssssssssssssssse")
+    }
+    socket.onmessage = ()=>{
+      console.log("message")
+    }
+    const sendMsg=()=>{
+      socket.send("{" +
+          '"fromUserId":1,' +'"toUserId":1,'+'"message":"message"'+
+          "}")
+      console.log("11111111111111")
+    }
 
     const receiveMsgList=[
       {

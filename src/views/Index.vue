@@ -38,7 +38,7 @@ export default defineComponent({
   setup(){
   const store = useStore()
     store.dispatch('getHotPassage',{num:"1",page:"1",theme:""})
-
+    console.log(store.state.passages)
     const typeList = ["失物招领","聊天交友","失物招领","聊天交友","失物招领","聊天交友"];
     for (let i = 0; i < 6; i++) {
       console.log(typeList[i]);

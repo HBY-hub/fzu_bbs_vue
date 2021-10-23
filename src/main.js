@@ -5,7 +5,6 @@ import store from './store'
 import Vant from 'vant'
 import 'vant/lib/index.css';
 import axios from "axios";
-import './mock/index'
 axios.defaults.baseURL = 'http://localhost:8010/'
 
 
