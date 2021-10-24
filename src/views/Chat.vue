@@ -25,12 +25,21 @@
   </div>
 </template>
 <script>
-import {defineComponent, toRaw} from "vue";
-import store from '../store/index';
+import {defineComponent, ref, toRaw} from "vue";
+import axios from "axios";
+import {useStore} from "vuex";
 
 export default defineComponent({
   name: "Chat",
   setup(){
+    const store = useStore();
+    const to = window.location.pathname.split("/")[2]
+    let toUser = ref()
+    axios.get("/getUser",{params:{"id":"2"}}).then((res)=>{
+      toUser = res.data
+    })
+
+    console.log(to)
     const socket = new WebSocket("ws://localhost:8010/chat/"+toRaw(store.state.user).id)
     socket.onopen = ()=>{
       console.log("opennnnnnnnnnn")
@@ -38,12 +47,14 @@ export default defineComponent({
     socket.onclose = ()=>{
       console.log("closssssssssssssssse")
     }
-    socket.onmessage = ()=>{
-      console.log("message")
+    socket.onmessage = (content)=>{
+      const message = JSON.parse(content.data).message
+      console.log(message)
+
     }
     const sendMsg=()=>{
       socket.send("{" +
-          '"fromUserId":1,' +'"toUserId":1,'+'"message":"message"'+
+          '"fromUserId":1,' +'"toUserId":1,'+'"message":"what I say"'+
           "}")
       console.log("11111111111111")
     }
@@ -60,35 +71,12 @@ export default defineComponent({
       {
         flag:false,
         message: "2222"
-      },
-      {
-        flag:false,
-        message: "2222"
-      },
-      {
-        flag:false,
-        message: "2222"
-      },
-      {
-        flag:false,
-        message: "2222"
-      },
-      {
-        flag:false,
-        message: "2222"
-      },
-      {
-        flag:false,
-        message: "2222"
-      },
-      {
-        flag:false,
-        message: "2222"
       }
     ]
     return {
       sendMsg,
-      receiveMsgList
+      receiveMsgList,
+      toUser
     }
   }
 

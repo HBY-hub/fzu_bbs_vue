@@ -34,12 +34,13 @@ const routes = [
     component:()=>import('../views/AddPassage')
   },
   {
-    path: '/chat',
+    path: '/chat/:toId',
     name: 'chat',
-    component:()=>import('../views/Chat')
+    component:()=>import('../views/Chat'),
+    meta:{needLogin:true}
   },
   {
-    path: '/passage',
+    path: '/passage/:id',
     name: 'passage',
     component:()=>import('../views/Passage')
   }
@@ -49,5 +50,21 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+import store from '../store'
 
+router.beforeEach((to, from, next) => { //全局钩子函数
+  to.matched.some((route) => {
+    // to.matched.forEach((route) => {
+    if (route.meta.needLogin) { //通过此操作可以判断哪些页面需要登录
+      if (store.state.token) {
+        next()
+      } else {
+        next({path:'/login'})
+      }
+    } else {
+      next();
+    }
+  });
+
+});
 export default router

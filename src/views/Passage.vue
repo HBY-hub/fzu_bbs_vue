@@ -50,10 +50,14 @@
 <script>
 import {defineComponent, ref} from "vue";
 import UserInfo from "@/components/UserInfo";
+import {useRoute} from "vue-router";
 export default defineComponent({
   name: "Passage",
   components: {UserInfo},
   setup(){
+    const $route = useRoute()
+    const id= $route.params.id;
+    console.log(id)
     const imageList = ref(['https://img.yzcdn.cn/vant/ipad.jpeg'])
     const comments = ref([{id:1},{id:2}])
 

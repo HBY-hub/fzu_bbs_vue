@@ -27,11 +27,13 @@
 <script >
 
 import {defineComponent, ref, toRaw} from "vue";
-import store from '../store/index'
+import {useStore} from "vuex";
+
 
 export default defineComponent({
   name: "Login",
   setup() {
+    const store = useStore()
     console.log(toRaw(store.state.user))
     console.log(toRaw(store.state.token))
     const userName = ref('');

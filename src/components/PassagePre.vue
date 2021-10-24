@@ -1,42 +1,49 @@
 <template>
-  <van-row>
-    <van-col span="1"/>
-    <van-col span="4">
-      <van-image round fit="fill" src="https://img.yzcdn.cn/vant/ipad.jpeg" />
-    </van-col>
-    <van-col span="14">
-      <div style="color:orange">
-        name
-      </div>
-    </van-col>
-    <van-col span="4">
-      <van-tag plain type="primary">关注</van-tag>
-      <van-tag type="primary">取消关注</van-tag>
-    </van-col>
-    <van-col span="1"/>
-  </van-row>
-  <van-row>
-    <van-col span="1"/>
-    <van-col span="22">
-      这里是我说的话
-      这里是我说的话
-      这里是我说的话
-      这里是我说的话
-      这里是我说的话
-    </van-col>
-    <van-col span="1"/>
-    <van-col v-for="image in imageList" :key=image span="8">
-      <van-image :src="image" />
-    </van-col>
-  </van-row>
+  -------------------------------------------------------------
+  <router-link :to="'/passage/'+passage.id">
+    <van-row>
+      <van-col span="1"/>
+      <van-col span="4">
+        <van-image round fit="fill" src="https://img.yzcdn.cn/vant/ipad.jpeg" />
+      </van-col>
+      <van-col span="14">
+        <div style="color:orange">
+          {{passage.title}}
+        </div>
+      </van-col>
+      <van-col span="4">
+        <van-tag plain type="primary">关注</van-tag>
+        <van-tag type="primary">取消关注</van-tag>
+      </van-col>
+      <van-col span="1"/>
+    </van-row>
+    <van-row >
+      <van-col span="1"/>
+      <van-col span="22">
+        {{passage.description}}
+      </van-col>
+      <van-col span="1"/>
+    </van-row>
+    <van-row>
 
+      <van-col v-for="image in imageList" :key=image span="8">
+        <van-image :src="image" />
+      </van-col>
+    </van-row>
+
+  </router-link>
 </template>
 
 <script>
-import {defineComponent,ref} from "vue";
+import {defineComponent, ref} from "vue";
 
 export default defineComponent({
   name: "PassagePre",
+  props:{
+    passage: {
+      type:Object
+    }
+  },
   setup(){
     const imageList = ref([
       "https://img.yzcdn.cn/vant/ipad.jpeg",
@@ -52,5 +59,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.van-row{
+  width: 100%;
+}
 
 </style>

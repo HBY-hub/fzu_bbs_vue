@@ -19,7 +19,15 @@ export default createStore({
     token: localStorage.getItem('token') || '',
     passages: [],
     passage:{},
-    chatList:{},
+    chatList:JSON.parse(localStorage.getItem("chatList"))||[
+      {
+        "userId":1,
+        "username":"a",
+        "message":"message",
+        "img":"https://img.yzcdn.cn/vant/ipad.jpeg"
+      }
+    ],
+    // [{"userId":1,"username":"","message":"","img":""},....]
     chat:{}
   },
   mutations: {
@@ -32,10 +40,20 @@ export default createStore({
       state.user = data.data;
       localStorage.setItem("user",JSON.stringify(data.data));
     },
+    addMessage(state,data) {
+      var flag = 1;
+      state.chatList = state.chatList.find((v)=>{
+        if(v.username==data.username)flag = 0;
+      })
+      if(flag){
+        state.chatList.push(data)
+      }
+    },
     logout(state){
       state.token = ''
-      state.user = { isLogin: false }
+      state.user = null
       localStorage.remove('token')
+      localStorage.remove("user")
     },
     getHotPassage(state,rawData){
       console.log(rawData)

@@ -1,10 +1,10 @@
 <template>
   <van-row class="row">
     <van-col span="6">
-      <van-image height="80px" src="https://img.yzcdn.cn/vant/ipad.jpeg"/>
+      <van-image height="80px" :src="message.img"/>
     </van-col>
     <van-col span="18">
-      <van-cell title="我是LZY" size="large" value="三分钟前" label="下面是我说的话" />
+      <van-cell :title="message.username" size="large" value="三分钟前" :label="message.message" />
     </van-col>
 
   </van-row>
@@ -15,7 +15,16 @@
 import {defineComponent} from "vue";
 
 export default defineComponent({
-  name: "Message"
+  name: "Message",
+  props:{
+    message:{
+      type: Object
+    }
+  },
+  setup(){
+    console.log("1111111111")
+
+  }
 })
 </script>
 
