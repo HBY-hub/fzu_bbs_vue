@@ -1,4 +1,5 @@
 <template>
+  <Nav :title="passage.title"/>
   <van-row>
     <van-col span="1"/>
     <van-col span="22">
@@ -35,35 +36,46 @@
     </van-col>
     <van-col span="1"/>
   </van-row>
-  <div v-for="comment in comments" :key="comment.id">
-    <UserInfo/>
-    <van-row>
-      <van-col span="1"/>
-      <van-col span="22">
-        <p>你你在说啥你在说啥你在说啥你在说啥你在说啥你在说啥你在说啥你在说啥你在说啥在说啥</p>
-      </van-col>
-      <van-col span="1"/>
-    </van-row>
-  </div>
+  <Comment v-for="comment in comments" :comment="comment" :key="comment.id"/>
+
 </template>
 
 <script>
-import {defineComponent, ref} from "vue";
+import {defineComponent, ref, watch} from "vue";
 import UserInfo from "@/components/UserInfo";
 import {useRoute} from "vue-router";
+import Nav from "@/components/Nav";
+import axios from "axios";
+import Comment from "@/components/Comment";
 export default defineComponent({
   name: "Passage",
-  components: {UserInfo},
+  components: {Comment, Nav, UserInfo},
   setup(){
     const $route = useRoute()
     const id= $route.params.id;
     console.log(id)
     const imageList = ref(['https://img.yzcdn.cn/vant/ipad.jpeg'])
     const comments = ref([{id:1},{id:2}])
+    let passage = ref()
+    let user = ref()
+    axios.get("getPassageById",{params:{"id":id}}).then((res)=>{
+      passage.value = res.data.data
+    })
+    axios.get("getCommentByPassageId",{params:{"id":id}}).then((res)=>{
+      comments.value = res.data
+    })
 
+    watch(passage,(newpassage,oldpassage)=>{
+      console.log("change")
+      console.log(oldpassage)
+      axios.get("getUserByName",{params:{"username":newpassage.user}}).then((res)=>{
+        user.value = res.data
+      })
+    })
     return{
       imageList,
-      comments
+      comments,
+      passage
     }
 
   },

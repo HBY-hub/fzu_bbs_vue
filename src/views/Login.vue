@@ -66,7 +66,14 @@ export default defineComponent({
           'Content-Type': 'multipart/form-data'
         }
       }).then(res=>{
-        console.log(res)
+        if(res.status=="200"){
+          store.commit("login",res.data)
+          console.log(store.state.token)
+          if(store.state.token){
+            store.dispatch("user",store.state.token)
+          }
+          console.log(store.state.user)
+        }
       })
     };
     return {

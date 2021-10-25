@@ -12,16 +12,19 @@
     </div>
 
   </van-list>
+  <Bottom/>
 </template>
 <script>
 import {defineComponent} from "vue";
 import Message from "@/components/Message";
 import { ref } from 'vue';
 import {useStore} from "vuex";
+import Bottom from "@/components/Bottom";
 
 export default defineComponent({
   name: "Messages",
   components:{
+    Bottom,
     Message
   },
   setup(){

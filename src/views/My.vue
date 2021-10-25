@@ -70,11 +70,14 @@
       <van-cell icon="warning-o" title="退出登录" is-link />
     </van-cell-group>
   </div>
+  <Bottom/>
 </template>
 
 <script>
+import Bottom from "@/components/Bottom";
 export default {
   name: 'my',
+  components: {Bottom},
   methods: {
     errorHandler() {
       return true

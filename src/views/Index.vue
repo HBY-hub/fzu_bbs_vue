@@ -1,10 +1,8 @@
 <template>
   <van-nav-bar
-      title="标题"
-      left-text="返回"
-      right-text="按钮"
+      title="福妈"
+      right-text="搜索"
       left-arrow
-      @click-left="onClickLeft"
       @click-right="onClickRight"
   />
   <van-grid :column-num="3" :clickable="true">
@@ -40,6 +38,7 @@
     />
     <passage-pre v-for="passage in passages" :passage="passage" :key="passage.id" />
 
+    <Bottom/>
   </van-grid>
 </template>
 <script>
@@ -47,9 +46,10 @@ import {defineComponent, ref} from "vue";
 import PassagePre from "@/components/PassagePre";
 import {useStore} from 'vuex'
 import axios from "axios";
+import Bottom from "@/components/Bottom";
 export default defineComponent({
   name:"Index",
-  components: {PassagePre},
+  components: {Bottom, PassagePre},
   setup(){
     const store = useStore()
 
@@ -72,7 +72,11 @@ export default defineComponent({
       })
     }
     console.log("passsssssss")
+    const onClickLeft = ()=>{
+      history.back()
+    }
     return{
+      onClickLeft,
       changeTheme,
       typeList,
       passages

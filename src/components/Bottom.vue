@@ -1,8 +1,8 @@
 <template>
-  <van-tabbar route v-if="needbuttom">
-    <van-tabbar-item to="/index" icon="home-o">标签</van-tabbar-item>
-    <van-tabbar-item to="/messages" icon="chat-o">标签</van-tabbar-item>
-    <van-tabbar-item to="/my" icon="user-circle-o">标签</van-tabbar-item>
+  <van-tabbar fixed="true" route>
+    <van-tabbar-item to="/index" icon="home-o">主页</van-tabbar-item>
+    <van-tabbar-item to="/messages" icon="chat-o">消息</van-tabbar-item>
+    <van-tabbar-item to="/my" icon="user-circle-o">我的</van-tabbar-item>
   </van-tabbar>
 </template>
 

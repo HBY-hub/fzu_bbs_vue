@@ -1,11 +1,10 @@
 <template>
   <van-nav-bar
-      title="标题"
+      fixed="true"
+      :title="title"
       left-text="返回"
-      right-text="按钮"
       left-arrow
       @click-left="onClickLeft"
-      @click-right="onClickRight"
   />
 </template>
 
@@ -13,7 +12,17 @@
 import {defineComponent} from "vue";
 
 export default defineComponent({
-  name: "Nav"
+  name: "Nav",
+  props:
+      {
+        title:String
+      },
+  setup(){
+    const onClickLeft = () =>{history.back()}
+    return {
+      onClickLeft
+    }
+  }
 })
 </script>
 

@@ -26,7 +26,8 @@ const routes = [
   {
     path: '/my',
     name: 'my',
-    component: () => import('../views/My')
+    component: () => import('../views/My'),
+    meta:{needLogin:true}
   },
   {
     path: '/addPassage',

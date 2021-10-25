@@ -58,7 +58,7 @@ import axios from "axios";
 export default defineComponent({
   name: "AddPassage",
   setup(){
-    const columns = ['失物招领','交友'];
+    const columns = ['失物招领','快递代取','活动通知','校园兼职','闲置转让'];
     const result = ref('');
     const showPicker = ref(false);
 
