@@ -4,7 +4,7 @@
     <van-row>
       <van-col span="1"/>
       <van-col span="4">
-        <van-image round fit="fill" src="https://img.yzcdn.cn/vant/ipad.jpeg" />
+        <UserImage v-if="user" :user="user"/>
       </van-col>
       <van-col span="14">
         <div style="color:orange">
@@ -20,7 +20,7 @@
     <van-row >
       <van-col span="1"/>
       <van-col span="22">
-        {{passage.description}}
+        <p>{{passage.description}}</p>
       </van-col>
       <van-col span="1"/>
     </van-row>
@@ -36,22 +36,34 @@
 
 <script>
 import {defineComponent, ref} from "vue";
+import UserImage from "@/components/UserImage";
+import axios from "axios";
 
 export default defineComponent({
   name: "PassagePre",
+  components: {UserImage},
   props:{
     passage: {
       type:Object
     }
   },
-  setup(){
+  setup(props){
     const imageList = ref([
       "https://img.yzcdn.cn/vant/ipad.jpeg",
       "https://img.yzcdn.cn/vant/ipad.jpeg",
       "https://img.yzcdn.cn/vant/ipad.jpeg"
     ])
+    let user = ref();
+    axios.get("/getUserByName",{params:{"username": props.passage.userName}}).then((res)=>{
+      user.value = res.data;
+      console.log(user.value)
+    })
+    axios.get("/images",{params:{"id":props.passage.id}}).then((res)=>{
+      imageList.value = res.data;
+    })
     return{
-      imageList
+      imageList,
+      user
     }
   }
 
