@@ -13,17 +13,17 @@
     />
     <van-grid-item
         @click="changeTheme('失物招领')"
-        icon="https://img.yzcdn.cn/vant/ipad.jpeg"
+        icon="paid"
         text="失物招领"
     />
     <van-grid-item
         @click="changeTheme('快递代取')"
-        icon="https://img.yzcdn.cn/vant/ipad.jpeg"
+        icon="logistics"
         text="快递代取"
     />
     <van-grid-item
         @click="changeTheme('活动通知')"
-        icon="https://img.yzcdn.cn/vant/ipad.jpeg"
+        icon="flag-o"
         text="活动通知"
     />
     <van-grid-item
@@ -33,7 +33,7 @@
     />
     <van-grid-item
         @click="changeTheme('闲置转让')"
-        icon="https://img.yzcdn.cn/vant/ipad.jpeg"
+        icon="after-sale"
         text="闲置转让"
     />
     <passage-pre v-for="passage in passages" :passage="passage" :key="passage.id" />

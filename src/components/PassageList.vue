@@ -14,7 +14,7 @@ export default defineComponent({
   components: {PassagePre},
   setup(){
     const passages = ref([
-      {"id":"1","username":"name1","title":"title1","content":"content1",""},
+      {"id":"1","username":"name1","title":"title1","content":"content1"},
       {"id":"2"}
     ])
 
