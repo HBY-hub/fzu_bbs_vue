@@ -1,20 +1,16 @@
 <template>
-  <Nav :title="passage.title"/>
-  <van-row>
-    <van-col span="1"/>
-    <van-col span="22">
-      <p style="font-size: 20px;width: 100px">这是标题</p>
-    </van-col>
-    <van-col span="1"/>
-  </van-row>
-  <UserInfo/>
-  <van-row>
-    <van-col span="1"/>
-    <van-col span="22">
-      正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文正文
-    </van-col>
-    <van-col span="1"/>
-  </van-row>
+  <div>
+    <Nav v-if="passage" :title="passage.title"/>
+    <Title v-if="passage" :title="passage.title"/>
+    <UserInfo :user="user"/>
+    <van-row v-if="passage">
+      <van-col span="1"/>
+      <van-col span="22">
+          {{ passage.content }}
+      </van-col>
+      <van-col span="1"/>
+    </van-row>
+  </div>
   <van-row>
     <van-col span="1"/>
     <van-col span="22">
@@ -25,14 +21,14 @@
   <van-row>
     <van-col span="1"/>
     <van-col span="22">
-      <van-image v-for="url in imageList" :key="url" :src="url"/>
+      <van-image width="100%" v-for="image in imageList" :key="image.id" :src="image.url"/>
     </van-col>
     <van-col span="1"/>
   </van-row>
   <van-row>
     <van-col span="1"/>
     <van-col span="22">
-      <p style="width: 100%;font-weight: bolder" >全部回复</p>
+      <p style="width: 100%;font-weight: bolder">全部回复</p>
     </van-col>
     <van-col span="1"/>
   </van-row>
@@ -47,35 +43,43 @@ import {useRoute} from "vue-router";
 import Nav from "@/components/Nav";
 import axios from "axios";
 import Comment from "@/components/Comment";
+import Title from "@/components/Title";
+
 export default defineComponent({
   name: "Passage",
-  components: {Comment, Nav, UserInfo},
-  setup(){
+  components: {Title, Comment, Nav, UserInfo},
+  setup() {
     const $route = useRoute()
-    const id= $route.params.id;
+    const id = $route.params.id;
     console.log(id)
-    const imageList = ref(['https://img.yzcdn.cn/vant/ipad.jpeg'])
-    const comments = ref([{id:1},{id:2}])
+    const imageList = ref([])
+    const comments = ref([])
     let passage = ref()
     let user = ref()
-    axios.get("getPassageById",{params:{"id":id}}).then((res)=>{
+    axios.get("getPassageById", {params: {"id": id}}).then((res) => {
       passage.value = res.data.data
     })
-    axios.get("getCommentByPassageId",{params:{"id":id}}).then((res)=>{
-      comments.value = res.data
-    })
 
-    watch(passage,(newpassage,oldpassage)=>{
-      console.log("change")
+    watch(passage, (newpassage, oldpassage) => {
+      axios.get("getCommentByPassageId", {params: {"id": id}}).then((res) => {
+        console.log("getcommont")
+        console.log(res.data.data)
+        comments.value = res.data.data
+      })
       console.log(oldpassage)
-      axios.get("getUserByName",{params:{"username":newpassage.user}}).then((res)=>{
+
+      axios.get("getUserByName", {params: {"username": newpassage.userName}}).then((res) => {
         user.value = res.data
       })
+      axios.get("images", {params: {"id": newpassage.id}}).then((res) => {
+        imageList.value = res.data.data
+      })
     })
-    return{
+    return {
       imageList,
       comments,
-      passage
+      passage,
+      user
     }
 
   },

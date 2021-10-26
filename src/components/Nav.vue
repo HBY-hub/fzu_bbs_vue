@@ -1,6 +1,5 @@
 <template>
   <van-nav-bar
-      fixed="true"
       :title="title"
       left-text="返回"
       left-arrow

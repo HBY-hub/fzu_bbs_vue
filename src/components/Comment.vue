@@ -11,17 +11,22 @@
 
 <script>
 import {defineComponent, ref} from "vue";
+import UserInfo from "@/components/UserInfo";
 import axios from "axios";
 export default defineComponent({
   name: "Comment",
+  components:{
+    UserInfo
+  },
   props:{
     comment:Object
   },
   setup(props){
-    console.log(props)
+    console.log("comment")
+    console.log(props.comment.userName)
     let user = ref();
-    axios.get("/getUserByName",{params:{"username":props.comment.user_name}}).then((res)=>
-        user.value = res.data
+    axios.get("getUserByName",{params:{"username":props.comment.userName}}).then((res)=>
+       user.value = res.data
     )
     return {
       user

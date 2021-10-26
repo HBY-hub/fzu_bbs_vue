@@ -37,6 +37,10 @@
         text="闲置转让"
     />
     <passage-pre v-for="passage in passages" :passage="passage" :key="passage.id" />
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 
     <Bottom/>
   </van-grid>

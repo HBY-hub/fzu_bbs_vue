@@ -6,7 +6,8 @@
       <van-col span="4">
         <UserImage v-if="user" :user="user"/>
       </van-col>
-      <van-col span="14">
+      <van-col span="1"/>
+      <van-col span="13">
         <div style="color:orange">
           {{passage.title}}
         </div>
@@ -27,7 +28,7 @@
     <van-row>
 
       <van-col v-for="image in imageList" :key=image span="8">
-        <van-image :src="image" />
+        <van-image :src="image.url" />
       </van-col>
     </van-row>
 
@@ -59,7 +60,9 @@ export default defineComponent({
       console.log(user.value)
     })
     axios.get("/images",{params:{"id":props.passage.id}}).then((res)=>{
-      imageList.value = res.data;
+      console.log("image")
+      console.log(res.data.data)
+      imageList.value = res.data.data;
     })
     return{
       imageList,
