@@ -5,7 +5,7 @@ import store from './store'
 import Vant from 'vant'
 import 'vant/lib/index.css';
 import axios from "axios";
-axios.defaults.baseURL = 'http://localhost:8010/'
+axios.defaults.baseURL = process.env.VUE_APP_URL
 
 
 
