@@ -51,6 +51,7 @@ export default defineComponent({
   name:"Index",
   components: {Bottom, PassagePre},
   setup(){
+    console.log(process.env)
     const store = useStore()
 
     store.dispatch('getHotPassage',{num:"1",page:"1",theme:""})
