@@ -21,7 +21,7 @@ export default createStore({
     passage:{},
     chatList:JSON.parse(localStorage.getItem("chatList"))||[
       {
-        "userId":1,
+        "userId":2,
         "username":"a",
         "message":"message",
         "img":"https://img.yzcdn.cn/vant/ipad.jpeg"
