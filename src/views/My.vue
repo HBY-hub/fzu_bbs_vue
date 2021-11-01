@@ -4,8 +4,11 @@
   <div class="user-profile">
     <div class="info">
       <div class="img">
-        <van-image  round   src="https://img.yzcdn.cn/vant/ipad.jpeg" />
-        <van-button round  size="mini" type="info">更换头像</van-button>
+        <van-uploader :after-read="afterRead" >
+          <van-image  round   :src="user.avatar" />
+        </van-uploader>
+
+<!--        <van-button round  size="mini" type="info">更换头像</van-button>-->
       </div>
       <van-form>
         <van-field
@@ -75,12 +78,16 @@
 
 <script>
 import Bottom from "@/components/Bottom";
+import {useStore} from "vuex";
+
 export default {
   name: 'my',
   components: {Bottom},
-  methods: {
-    errorHandler() {
-      return true
+  setup(){
+    const store  = useStore()
+    const user = store.state.user
+    return{
+      user
     }
   }
 }
