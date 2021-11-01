@@ -48,8 +48,9 @@ export default createStore({
     logout(state){
       state.token = ''
       state.user = null
-      localStorage.remove('token')
-      localStorage.remove("user")
+      // localStorage.remove('token')
+      // localStorage.remove("user")
+      localStorage.clear()
     },
     getHotPassage(state,rawData){
       console.log(rawData)

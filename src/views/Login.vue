@@ -77,11 +77,9 @@ export default defineComponent({
     const onSubmit = (values) => {
       isLoading.value =true
       store.dispatch("login",values)
+      router.push('/index')
       if(store.state.token){
         store.dispatch("user",store.state.token)
-      }
-      if(store.state.token){
-        router.push('/index')
       }
     };
     const after_read = (file) => {
@@ -100,10 +98,9 @@ export default defineComponent({
             store.dispatch("user",store.state.token)
           }
         }
+
+        router.push("/index")
       })
-      if(store.state.token){
-        router.push('/index')
-      }
     };
     let isLoading = ref(false);
     return {

@@ -70,7 +70,10 @@
     <van-cell-group class="user-group">
       <van-cell icon="edit" title="编辑资料" is-link />
       <van-cell icon="setting-o" title="系统设置" is-link />
-      <van-cell icon="warning-o" title="退出登录" is-link />
+      <van-uploader capture="camera" :after-read="uploadFace">
+        <van-cell icon="edit" title="脸部上传"/>
+      </van-uploader>
+      <van-cell icon="warning-o" title="退出登录" @click="logout" is-link />
     </van-cell-group>
   </div>
   <Bottom/>
@@ -79,15 +82,53 @@
 <script>
 import Bottom from "@/components/Bottom";
 import {useStore} from "vuex";
+import axios from "axios";
+import {useRouter} from "vue-router";
 
 export default {
   name: 'my',
   components: {Bottom},
   setup(){
     const store  = useStore()
+    const router = useRouter()
     const user = store.state.user
+    const afterRead=(file)=>{
+
+      let formData = new FormData();
+      formData.append("file",file.file);
+      formData.append("id",store.state.user.id)
+      console.log(file)
+      axios.post("/avatarUpload",formData,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(
+          (res)=>{
+            console.log(res)
+            store.dispatch('user',store.state.token)
+          })
+    }
+    const uploadFace = (file)=>{
+      let formData = new FormData();
+      formData.append("file",file.file);
+      formData.append("id",store.state.user.id)
+      axios.post("/faceUpload",formData,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(res=>{
+        console.log(res)
+      })
+    }
+    const logout = ()=>{
+      store.commit("logout")
+      router.push('/login')
+    }
     return{
-      user
+      uploadFace,
+      logout,
+      user,
+      afterRead
     }
   }
 }
