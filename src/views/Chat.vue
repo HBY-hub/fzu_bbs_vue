@@ -59,7 +59,7 @@ export default defineComponent({
     console.log(records)
 
     console.log(to)
-    const socket = new WebSocket("ws://"+process.env.VUE_APP_URL+"chat/"+toRaw(store.state.user).id)
+    const socket = new WebSocket("ws://"+process.env.VUE_WS_URL+"chat/"+toRaw(store.state.user).id)
     socket.onopen = ()=>{
       console.log("opennnnnnnnnnn")
     }
