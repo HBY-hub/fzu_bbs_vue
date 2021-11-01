@@ -1,5 +1,5 @@
 <template>
-
+  <van-nav-bar title="我的" />
 
   <div class="user-profile">
     <div class="info">
@@ -15,7 +15,7 @@
             v-model="username"
             name="用户名"
             label="用户名"
-            placeholder="用户名"
+            :placeholder="user.userName"
             :rules="[{ required: true, message: '请填写用户名' }]"
         />
         <van-field
@@ -29,7 +29,7 @@
             v-model="introduction"
             name="学院及专业"
             label="学院及专业"
-            placeholder="学院及专业"
+            :placeholder="user.academy"
             :rules="[{ required: true, message: '请填写学院及专业' }]"
         />
         <van-field

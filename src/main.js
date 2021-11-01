@@ -5,7 +5,7 @@ import store from './store'
 import Vant from 'vant'
 import 'vant/lib/index.css';
 import axios from "axios";
-axios.defaults.baseURL = process.env.VUE_APP_URL
+axios.defaults.baseURL =  process.env.VUE_APP_URL
 
 
 
