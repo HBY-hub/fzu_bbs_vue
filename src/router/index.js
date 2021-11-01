@@ -51,6 +51,8 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+// import {useStore} from "vuex";
+// const store = useStore();
 import store from '../store'
 
 router.beforeEach((to, from, next) => { //全局钩子函数
@@ -58,6 +60,10 @@ router.beforeEach((to, from, next) => { //全局钩子函数
     // to.matched.forEach((route) => {
     if (route.meta.needLogin) { //通过此操作可以判断哪些页面需要登录
       if (store.state.token) {
+        console.log("route")
+        if(store.state.user==null){
+          store.dispatch("user",store.state.token)
+        }
         next()
       } else {
         next({path:'/login'})

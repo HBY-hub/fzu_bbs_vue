@@ -48,13 +48,16 @@
 
     </div>
   </van-form>
+  <van-loading v-if="isLoading" style="text-align: center" type="spinner" color="#1989fa" />
 </template>
 <script >
 
 import {defineComponent, ref, toRaw} from "vue";
 import {useStore} from "vuex";
+import {useRouter} from 'vue-router'
 import axios from "axios";
 import Nav from "@/components/Nav";
+
 
 
 export default defineComponent({
@@ -64,20 +67,25 @@ export default defineComponent({
 
   },
   setup() {
+    const router = useRouter()
     const store = useStore()
     console.log(toRaw(store.state.user))
     console.log(toRaw(store.state.token))
     const userName = ref('');
     const password = ref('');
+
     const onSubmit = (values) => {
+      isLoading.value =true
       store.dispatch("login",values)
-      console.log(store.state.token)
       if(store.state.token){
         store.dispatch("user",store.state.token)
       }
-      console.log(store.state.user)
+      if(store.state.token){
+        router.push('/index')
+      }
     };
     const after_read = (file) => {
+      isLoading.value = true
       let formData = new FormData();
       formData.append("file",file.file);
       console.log(file)
@@ -88,15 +96,18 @@ export default defineComponent({
       }).then(res=>{
         if(res.status=="200"){
           store.commit("login",res.data)
-          console.log(store.state.token)
           if(store.state.token){
             store.dispatch("user",store.state.token)
           }
-          console.log(store.state.user)
         }
       })
+      if(store.state.token){
+        router.push('/index')
+      }
     };
+    let isLoading = ref(false);
     return {
+      isLoading,
       userName,
       after_read,
       password,

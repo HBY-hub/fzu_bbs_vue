@@ -15,8 +15,8 @@
 
       </van-row>
     </div>
-
     <van-field v-model="message" style="position: fixed; bottom: 0;  background-color: #f7f8fa " center clearable id="talksub">
+
       <template #button>
         <van-button size="small" type="primary" @click="sendMsg">发送</van-button>
       </template>
@@ -29,6 +29,7 @@ import {defineComponent, ref, toRaw, unref} from "vue";
 import axios from "axios";
 import {useStore} from "vuex";
 import Nav from "@/components/Nav";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "Chat",
@@ -41,12 +42,19 @@ export default defineComponent({
       toUser.value = res.data
     })
     let me = store.state.user
-
+    const router = useRouter()
+    if(to==me.id)router.back()
 
     let records = ref([])
     axios.get("getMessageRecord",{params:{"fromUserId":to,"toUserId":toRaw(store.state.user).id}}).then((res)=>{
       records.value = res.data.data
       console.log("toraw")
+      store.commit("addMessage",{
+        userId:toUser.value.id,
+        username:toUser.value.userName,
+        img:toUser.value.avatar,
+        message:records.value[0]?records.value[0].message:""
+      })
     })
     console.log(records)
 
@@ -59,20 +67,32 @@ export default defineComponent({
       console.log("closssssssssssssssse")
     }
     socket.onmessage = (content)=>{
-      const message = JSON.parse(content.data).message
-      console.log(message)
-
-    }
-    const sendMsg=()=>{
-      console.log(...toRaw(unref(records)))
-      console.log(toRaw(unref(records))[0])
-      let test = [...toRaw(unref(records)),toRaw(unref(records))[0]]
-      console.log(test)
+      const message = JSON.parse(content.data)
+      let test = [...toRaw(unref(records)),message]
       records.value = test
-      // socket.send("{" +
-      //     '"fromUserId":1,' +'"toUserId":1,'+'"message":"what I say"'+
-      //     "}")
-      console.log("11111111111111")
+      goBottom()
+    }
+    let message = ref("");
+    const sendMsg=()=>{
+      const temp = {
+        "fromUserId" : unref(me.id),
+        "message":unref(message),
+        "toUserId":unref(to)
+      }
+      let test = [...toRaw(unref(records)),temp]
+      records.value = test
+      console.log(JSON.stringify(temp))
+      socket.send(JSON.stringify(temp))
+      message.value = ""
+      goBottom()
+    }
+    const goBottom = ()=>{
+      console.log("goBottom")
+      let ele = document.getElementById('chatHistory');
+      console.log(ele)
+      console.log(ele.scrollTop)
+      console.log(ele.scrollHeight)
+      ele.scrollTop = ele.scrollHeight;
     }
 
     // const receiveMsgList=[
@@ -91,6 +111,7 @@ export default defineComponent({
     // ]
     return {
       sendMsg,
+      message,
       records,
       toUser,
       me

@@ -19,14 +19,7 @@ export default createStore({
     token: localStorage.getItem('token') || '',
     passages: [],
     passage:{},
-    chatList:JSON.parse(localStorage.getItem("chatList"))||[
-      {
-        "userId":2,
-        "username":"a",
-        "message":"message",
-        "img":"https://img.yzcdn.cn/vant/ipad.jpeg"
-      }
-    ],
+    chatList:JSON.parse(localStorage.getItem("chatList"))||[],
     // [{"userId":1,"username":"","message":"","img":""},....]
     chat:{}
   },
@@ -41,13 +34,16 @@ export default createStore({
       localStorage.setItem("user",JSON.stringify(data.data));
     },
     addMessage(state,data) {
-      var flag = 1;
-      state.chatList = state.chatList.find((v)=>{
-        if(v.username==data.username)flag = 0;
+      console.log("add")
+      console.log(data)
+      var temp = state.chatList
+      temp.push(data)
+      temp = temp.filter((v)=>{
+        return v.username!=data.username
       })
-      if(flag){
-        state.chatList.push(data)
-      }
+      temp = [data,...temp]
+      state.chatList = temp;
+      localStorage.setItem("chatList",JSON.stringify(state.chatList))
     },
     logout(state){
       state.token = ''
