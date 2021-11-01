@@ -1,10 +1,8 @@
 <template>
   <van-nav-bar
       title="福妈"
-      right-text="搜索"
-      left-arrow
-      @click-right="onClickRight"
   />
+  <van-search v-model="searchValue" placeholder="请输入搜索关键词" />
   <van-grid :column-num="3" :clickable="true">
     <van-grid-item
         @click="changeTheme('')"
@@ -46,7 +44,7 @@
   </van-grid>
 </template>
 <script>
-import {defineComponent, ref} from "vue";
+import {defineComponent, ref, watch} from "vue";
 import PassagePre from "@/components/PassagePre";
 import {useStore} from 'vuex'
 import axios from "axios";
@@ -77,11 +75,12 @@ export default defineComponent({
       })
     }
     console.log("passsssssss")
-    const onClickLeft = ()=>{
-      history.back()
-    }
+    const searchValue = ref("")
+    watch(searchValue,(n,o)=>{
+      console.log(o,n)
+    })
     return{
-      onClickLeft,
+      searchValue,
       changeTheme,
       typeList,
       passages

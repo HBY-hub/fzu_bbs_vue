@@ -1,5 +1,4 @@
 <template>
-  -------------------------------------------------------------
   <router-link :to="'/passage/'+passage.id">
     <van-row>
       <van-col span="1"/>
@@ -32,6 +31,7 @@
       </van-col>
     </van-row>
 
+    <van-divider />
   </router-link>
 </template>
 

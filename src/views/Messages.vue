@@ -1,4 +1,5 @@
 <template>
+  <Nav/>
   <van-list
       v-model:loading="loading"
       :finished="finished"
@@ -20,10 +21,12 @@ import Message from "@/components/Message";
 import { ref } from 'vue';
 import {useStore} from "vuex";
 import Bottom from "@/components/Bottom";
+import Nav from "@/components/Nav";
 
 export default defineComponent({
   name: "Messages",
   components:{
+    Nav,
     Bottom,
     Message
   },

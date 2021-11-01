@@ -1,4 +1,5 @@
 <template>
+  <Nav/>
   <van-row>
     <van-col span="1"/>
     <van-col span="22">
@@ -54,9 +55,11 @@
 <script>
 import {defineComponent, ref} from "vue";
 import axios from "axios";
+import Nav from "@/components/Nav";
 
 export default defineComponent({
   name: "AddPassage",
+  components: {Nav},
   setup(){
     const columns = ['失物招领','快递代取','活动通知','校园兼职','闲置转让'];
     const result = ref('');

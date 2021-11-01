@@ -33,6 +33,23 @@
     <van-col span="1"/>
   </van-row>
   <Comment v-for="comment in comments" :comment="comment" :key="comment.id"/>
+  <van-cell-group inset>
+    <van-field
+        v-model="message"
+        rows="2"
+        autosize
+        label="留言"
+        type="textarea"
+        maxlength="50"
+        placeholder="请输入留言"
+        show-word-limit
+    />
+  </van-cell-group>
+  <div style="margin: 16px;">
+    <van-button round block type="primary" native-type="submit">
+      提交
+    </van-button>
+  </div>
 
 </template>
 

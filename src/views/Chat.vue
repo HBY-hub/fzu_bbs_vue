@@ -1,4 +1,5 @@
 <template>
+  <Nav/>
   <div v-if="toUser">
     <div id="chatHistory" style="overflow:auto;" :style="{height: scrollerHeight}">
       <van-row v-for="(item, index) in records" :key="index" type="flex" justify="center" style="margin-top: 6%; ">
@@ -27,9 +28,11 @@
 import {defineComponent, ref, toRaw, unref} from "vue";
 import axios from "axios";
 import {useStore} from "vuex";
+import Nav from "@/components/Nav";
 
 export default defineComponent({
   name: "Chat",
+  components: {Nav},
   setup(){
     const store = useStore();
     const to = window.location.pathname.split("/")[2]
