@@ -6,7 +6,7 @@
   <van-row>
     <van-col span="7"/>
     <van-col span="10">
-  <van-image width="100%" height="100%" src="https://hby-test.oss-cn-guangzhou.aliyuncs.com/WPS%E5%9B%BE%E7%89%87%E7%BC%96%E8%BE%91.png" />
+  <van-image width="100%" height="100%" :src="require('../../src/assets/fzu.png')" />
 
     </van-col>
     <van-col span="7"/>

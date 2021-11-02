@@ -6,7 +6,7 @@
   <van-grid :column-num="3" :clickable="true">
     <van-grid-item
         @click="changeTheme('')"
-        icon="https://hby-test.oss-cn-guangzhou.aliyuncs.com/WPS%E5%9B%BE%E7%89%87%E7%BC%96%E8%BE%91.png"
+        :icon="require('../assets/fzu.png')"
         text="全部"
     />
     <van-grid-item
