@@ -46,7 +46,7 @@
     />
   </van-cell-group>
   <div style="margin: 16px;">
-    <van-button round block type="primary" native-type="submit">
+    <van-button round block type="primary" @click="submitComment" native-type="submit">
       提交
     </van-button>
   </div>
@@ -61,11 +61,13 @@ import Nav from "@/components/Nav";
 import axios from "axios";
 import Comment from "@/components/Comment";
 import Title from "@/components/Title";
+import {useStore} from "vuex";
 
 export default defineComponent({
   name: "Passage",
   components: {Title, Comment, Nav, UserInfo},
   setup() {
+    const store = useStore()
     const $route = useRoute()
     const id = $route.params.id;
     console.log(id)
@@ -92,7 +94,17 @@ export default defineComponent({
         imageList.value = res.data.data
       })
     })
+    let message = ref("")
+    const submitComment = ()=>{
+      console.log("submit")
+      axios.get("addComment",{params:{"father":0,"content":message.value,"username":store.state.user.userName,"passageId":id}}).then((res)=>{
+        console.log(res)
+        message.value = ""
+      })
+    }
     return {
+      message,
+      submitComment,
       imageList,
       comments,
       passage,
