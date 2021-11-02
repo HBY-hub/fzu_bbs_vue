@@ -1,5 +1,13 @@
 <template>
   <UserInfo :user="user"/>
+
+  <van-row v-if="faMessage">
+    <van-col span="1"/>
+    <van-col span="22">
+      <p>回复:{{faMessage}}</p>
+    </van-col>
+    <van-col span="1"/>
+  </van-row>
   <van-row>
     <van-col span="1"/>
     <van-col span="22">
@@ -28,7 +36,16 @@ export default defineComponent({
     axios.get("getUserByName",{params:{"username":props.comment.userName}}).then((res)=>
        user.value = res.data
     )
+    let faMessage = ref("")
+    if(props.comment.father>0) {
+      axios.get("getCommentById",{params:{"id":props.comment.father}}).then((res)=>{
+        console.log(res.data.data)
+        faMessage.value = res.data.data.content
+        console.log(faMessage.value)
+      })
+    }
     return {
+      faMessage,
       user
     }
 

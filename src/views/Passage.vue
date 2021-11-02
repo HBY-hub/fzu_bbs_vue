@@ -32,7 +32,11 @@
     </van-col>
     <van-col span="1"/>
   </van-row>
-  <Comment v-for="comment in comments" :comment="comment" :key="comment.id"/>
+
+  <div v-for="comment in comments" @click="setFather(comment.id,comment.content)" :key="comment.id">
+  <Comment   :comment="comment" />
+
+  </div>
   <van-cell-group inset>
     <van-field
         v-model="message"
@@ -41,7 +45,7 @@
         label="留言"
         type="textarea"
         maxlength="50"
-        placeholder="请输入留言"
+        :placeholder="holder"
         show-word-limit
     />
   </van-cell-group>
@@ -95,14 +99,25 @@ export default defineComponent({
       })
     })
     let message = ref("")
+    let fatherId = ref(0)
     const submitComment = ()=>{
       console.log("submit")
-      axios.get("addComment",{params:{"father":0,"content":message.value,"username":store.state.user.userName,"passageId":id}}).then((res)=>{
+      axios.get("addComment",{params:{"father":fatherId.value,"content":message.value,"username":store.state.user.userName,"passageId":id}}).then((res)=>{
         console.log(res)
         message.value = ""
       })
     }
+    const setFather = (cid,content)=>{
+      fatherId.value = cid
+      holder.value = "回复:"+content
+    }
+    let holder = ref("请输入回复")
+
+
     return {
+      holder,
+      fatherId,
+      setFather,
       message,
       submitComment,
       imageList,
