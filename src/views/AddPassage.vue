@@ -56,11 +56,14 @@
 import {defineComponent, ref} from "vue";
 import axios from "axios";
 import Nav from "@/components/Nav";
+import {useStore} from "vuex";
+
 
 export default defineComponent({
   name: "AddPassage",
   components: {Nav},
   setup(){
+    const store = useStore();
     const columns = ['失物招领','快递代取','活动通知','校园兼职','闲置转让'];
     const result = ref('');
     const showPicker = ref(false);
@@ -78,7 +81,7 @@ export default defineComponent({
     const onSubmit=()=>{
       console.log(images)
       axios.post("/addPassage",
-            {"title":title.value,"theme":result.value,"description":description.value,"content":content.value,"image":(images)}
+            {userName:store.state.user.userName,"title":title.value,"theme":result.value,"description":description.value,"content":content.value,"image":(images)}
       ).then(
           (res)=>{
             console.log(res)
