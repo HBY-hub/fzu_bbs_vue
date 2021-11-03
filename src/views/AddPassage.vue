@@ -56,6 +56,7 @@
 import {defineComponent, ref} from "vue";
 import axios from "axios";
 import Nav from "@/components/Nav";
+import {useRouter} from "vue-router";
 import {useStore} from "vuex";
 
 
@@ -65,6 +66,7 @@ export default defineComponent({
   setup(){
     const store = useStore();
     const columns = ['失物招领','快递代取','活动通知','校园兼职','闲置转让'];
+    const router = useRouter()
     const result = ref('');
     const showPicker = ref(false);
 
@@ -85,8 +87,10 @@ export default defineComponent({
       ).then(
           (res)=>{
             console.log(res)
+            router.push("/index")
           }
       )
+
     }
     const afterRead = (file) => {
       let formData = new FormData();
