@@ -26,6 +26,21 @@
     <van-col span="1"/>
   </van-row>
   <van-row>
+    <van-col span="2" />
+    <van-col span="20">
+      <div v-if= "type==3">
+        <van-tag v-for="people in peopleList" :key="people">
+          {{people}}
+        </van-tag>
+      </div>
+    </van-col>
+    <van-col span="2" />
+  </van-row>
+
+  <van-button v-if="type==3" @click="addpeople" type="primary">
+    参加
+  </van-button>
+  <van-row>
     <van-col span="1"/>
     <van-col span="22">
       <p style="width: 100%;font-weight: bolder">全部回复</p>
@@ -58,7 +73,7 @@
 </template>
 
 <script>
-import {defineComponent, ref, watch} from "vue";
+import {defineComponent, ref, toRaw, unref, watch} from "vue";
 import UserInfo from "@/components/UserInfo";
 import {useRoute} from "vue-router";
 import Nav from "@/components/Nav";
@@ -79,8 +94,15 @@ export default defineComponent({
     const comments = ref([])
     let passage = ref()
     let user = ref()
+    let type =  ref(0)
+    let detail = ref(null)
     axios.get("getPassageById", {params: {"id": id}}).then((res) => {
       passage.value = res.data.data
+      if(passage.value.theme ==='失物招领')type.value = 1
+      if(passage.value.theme ==='快递代取')type.value = 2;
+      if(passage.value.theme ==='活动通知')type.value = 3;
+      if(passage.value.theme ==='校园兼职')type.value = 4;
+      if(passage.value.theme ==='闲置转让')type.value = 5;
     })
 
     watch(passage, (newpassage, oldpassage) => {
@@ -97,7 +119,31 @@ export default defineComponent({
       axios.get("images", {params: {"id": newpassage.id}}).then((res) => {
         imageList.value = res.data.data
       })
+      axios.post("/getDetail",{id:passage.value.id},{}).then((res)=>{
+        console.log(res)
+        detail.value = res.data.message;
+        console.log("getdetail")
+        console.log(detail.value)
+        if(detail.value!=null){
+          if(passage.value.theme == "活动通知"){
+            console.log("活动")
+            peopleList.value = JSON.parse(detail.value).list
+            console.log(peopleList.value)
+          }
+        }
+      })
     })
+    const updateDetail =(newDetail)=>{
+      axios.post("/updateDetail",{id:passage.value.id,detail:newDetail}).then((res)=>{
+        console.log(res)
+      })
+    }
+    const addpeople = ()=>{
+      console.log(store.state.user)
+      peopleList.value =[...toRaw(unref(peopleList)),store.state.user.userName]
+      updateDetail(JSON.stringify({"list":peopleList.value}))
+    }
+
     let message = ref("")
     let fatherId = ref(0)
     const submitComment = ()=>{
@@ -107,6 +153,7 @@ export default defineComponent({
         message.value = ""
       })
     }
+    let peopleList = ref([]);
     const setFather = (cid,content)=>{
       fatherId.value = cid
       holder.value = "回复:"+content
@@ -115,14 +162,18 @@ export default defineComponent({
 
 
     return {
+      addpeople,
       holder,
+      peopleList,
       fatherId,
       setFather,
       message,
       submitComment,
+      type,
       imageList,
       comments,
       passage,
+      updateDetail,
       user
     }
 

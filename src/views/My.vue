@@ -5,7 +5,7 @@
     <div class="info">
       <div class="img">
         <van-uploader :after-read="afterRead" >
-          <van-image  round   :src="user.avatar" />
+          <van-image v-if="user.avatar"  round   :src="user.avatar" />
         </van-uploader>
 
 <!--        <van-button round  size="mini" type="info">更换头像</van-button>-->
