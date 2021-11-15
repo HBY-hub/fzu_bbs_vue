@@ -1,12 +1,6 @@
 <template>
-  <van-nav-bar
-      :title="登录"
-      left-text="返回"
-      left-arrow
-      right-text="注册"
-      @click-right="onClickRight"
-      @click-left="onClickLeft"
-  />  <br/>
+  <Nav/>
+  <br/>
   <br/>
 
   <van-row>
@@ -40,19 +34,10 @@
     </van-cell-group>
     <div style="margin: 16px;">
       <van-button round block type="primary" native-type="submit">
-        提交
+        注册
       </van-button>
     </div>
-    <div style="text-align: center">
-    <van-uploader :after-read="after_read" capture="camera" show-upload="false">
-      <div style="margin: 16px;">
-        <van-button round block type="primary" @click.prevent>
-          人脸识别
-        </van-button>
-      </div>
-    </van-uploader>
 
-    </div>
   </van-form>
   <van-loading v-if="isLoading" style="text-align: center" type="spinner" color="#1989fa" />
 </template>
@@ -62,11 +47,16 @@ import {defineComponent, ref, toRaw} from "vue";
 import {useStore} from "vuex";
 import {useRouter} from 'vue-router'
 import axios from "axios";
+import Nav from "@/components/Nav";
 
 
 
 export default defineComponent({
   name: "Login",
+  components:{
+    Nav
+
+  },
   setup() {
     const router = useRouter()
     const store = useStore()
@@ -75,45 +65,14 @@ export default defineComponent({
     const userName = ref('');
     const password = ref('');
 
-    const onSubmit = (values) => {
-      isLoading.value =true
-      store.dispatch("login",values)
-      router.push('/index')
-      if(store.state.token){
-        store.dispatch("user",store.state.token)
-      }
-    };
-    const after_read = (file) => {
-      isLoading.value = true
-      let formData = new FormData();
-      formData.append("file",file.file);
-      console.log(file)
-      axios.post("/faceLogin",formData,{
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then(res=>{
-        if(res.status=="200"){
-          store.commit("login",res.data)
-          if(store.state.token){
-            store.dispatch("user",store.state.token)
-          }
-        }
-
-        router.push("/index")
+    const onSubmit = () => {
+      axios.post("/register",{name:userName,password:password}).then((res)=>{
+        console.log(res)
       })
+      router.push('/login')
     };
-    let isLoading = ref(false);
-    const onClickRight = ()=>{
-      router.push("/register")
-    }
-    const onClickLeft = () =>{history.back()}
     return {
-      onClickRight,
-      onClickLeft,
-      isLoading,
       userName,
-      after_read,
       password,
       onSubmit,
     };

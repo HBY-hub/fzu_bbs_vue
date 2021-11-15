@@ -1,6 +1,8 @@
 <template>
   <van-nav-bar
       title="福妈"
+      right-text="发布"
+      @click-right="onClickRight"
   />
   <van-search v-model="searchValue" placeholder="请输入搜索关键词" />
   <van-grid :column-num="3" :clickable="true">
@@ -49,11 +51,13 @@ import PassagePre from "@/components/PassagePre";
 import {useStore} from 'vuex'
 import axios from "axios";
 import Bottom from "@/components/Bottom";
+import {useRouter} from "vue-router";
 export default defineComponent({
   name:"Index",
   components: {Bottom, PassagePre},
   setup(){
     console.log(process.env)
+    const router = useRouter()
     const store = useStore()
 
     store.dispatch('getHotPassage',{num:"1",page:"1",theme:""})
@@ -79,7 +83,11 @@ export default defineComponent({
     watch(searchValue,(n,o)=>{
       console.log(o,n)
     })
+    const onClickRight = ()=>{
+      router.push("/addPassage")
+    }
     return{
+      onClickRight,
       searchValue,
       changeTheme,
       typeList,
