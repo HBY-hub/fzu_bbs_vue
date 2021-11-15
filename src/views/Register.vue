@@ -66,7 +66,7 @@ export default defineComponent({
     const password = ref('');
 
     const onSubmit = () => {
-      axios.post("/register",{name:userName,password:password}).then((res)=>{
+      axios.post("/register",{name:userName.value,password:password.value}).then((res)=>{
         console.log(res)
       })
       router.push('/login')

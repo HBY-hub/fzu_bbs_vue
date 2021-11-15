@@ -6,6 +6,7 @@
       <div class="img">
         <van-uploader :after-read="afterRead" >
           <van-image v-if="user.avatar"  round   :src="user.avatar" />
+          <van-image v-else width="100%" height="100%" :src="require('../../src/assets/fzu.png')" />
         </van-uploader>
 
 <!--        <van-button round  size="mini" type="info">更换头像</van-button>-->

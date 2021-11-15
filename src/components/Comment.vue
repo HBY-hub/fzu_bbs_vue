@@ -1,5 +1,5 @@
 <template>
-  <UserInfo :user="user"/>
+  <UserInfo :user="user" :time="time"/>
 
   <van-row v-if="faMessage">
     <van-col span="1"/>
@@ -33,6 +33,7 @@ export default defineComponent({
     console.log("comment")
     console.log(props.comment.userName)
     let user = ref();
+    let time = ref(props.comment.createTime);
     axios.get("getUserByName",{params:{"username":props.comment.userName}}).then((res)=>
        user.value = res.data
     )
@@ -45,6 +46,7 @@ export default defineComponent({
       })
     }
     return {
+      time,
       faMessage,
       user
     }
