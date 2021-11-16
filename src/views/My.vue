@@ -41,32 +41,32 @@
         />
       </van-form>
     </div>
-    <van-row>
-      <van-col span="8">
-        <p style="text-align:center">0</p>
-        <p style="text-align:center">动态</p>
-      </van-col>
-      <van-col span="8">
-        <p style="text-align:center">0</p>
-        <p style="text-align:center">关注</p>
-      </van-col>
-      <van-col span="8">
-        <p style="text-align:center">0</p>
-        <p style="text-align:center">粉丝</p>
-      </van-col>
-    </van-row>
+<!--    <van-row>-->
+<!--      <van-col span="8">-->
+<!--        <p style="text-align:center">0</p>-->
+<!--        <p style="text-align:center">动态</p>-->
+<!--      </van-col>-->
+<!--      <van-col span="8">-->
+<!--        <p style="text-align:center">0</p>-->
+<!--        <p style="text-align:center">关注</p>-->
+<!--      </van-col>-->
+<!--      <van-col span="8">-->
+<!--        <p style="text-align:center">0</p>-->
+<!--        <p style="text-align:center">粉丝</p>-->
+<!--      </van-col>-->
+<!--    </van-row>-->
   </div>
-  <van-row class="user-links">
-    <van-col span="8" style="text-align:center">
-      <van-icon name="newspaper-o" color="#7af"/>我的动态
-    </van-col>
-    <van-col span="8" style="text-align:center">
-      <van-icon name="star-o" color="#f00"/>我的收藏
-    </van-col>
-    <van-col span="8" style="text-align:center">
-      <van-icon name="tosend" color="#fa0"/>阅读历史
-    </van-col>
-  </van-row>
+<!--  <van-row class="user-links">-->
+<!--    <van-col span="8" style="text-align:center">-->
+<!--      <van-icon name="newspaper-o" color="#7af"/>我的动态-->
+<!--    </van-col>-->
+<!--    <van-col span="8" style="text-align:center">-->
+<!--      <van-icon name="star-o" color="#f00"/>我的收藏-->
+<!--    </van-col>-->
+<!--    <van-col span="8" style="text-align:center">-->
+<!--      <van-icon name="tosend" color="#fa0"/>阅读历史-->
+<!--    </van-col>-->
+<!--  </van-row>-->
   <div class="demo1">
     <van-cell-group class="user-group">
       <van-cell icon="edit" title="编辑资料" is-link />

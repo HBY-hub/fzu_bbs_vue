@@ -1,10 +1,10 @@
 <template>
   <van-row class="row">
     <van-col span="6">
-      <van-image height="80px" :src="message.img"/>
+      <van-image height="80px" :src="img"/>
     </van-col>
     <van-col span="18">
-      <van-cell :title="message.username" size="large" value="三分钟前" :label="message.message" />
+      <van-cell :title="username" size="large" :value=time :label="message.message" />
     </van-col>
 
   </van-row>
@@ -12,7 +12,9 @@
 </template>
 
 <script>
-import {defineComponent} from "vue";
+import {defineComponent, ref} from "vue";
+import axios from "axios";
+import dayjs from "dayjs";
 
 export default defineComponent({
   name: "Message",
@@ -21,8 +23,33 @@ export default defineComponent({
       type: Object
     }
   },
-  setup(){
+  setup(props){
     console.log("1111111111")
+    let img=ref()
+    let username  = ref()
+    axios.get("/getUser",{params:{id:props.message.userId}}).then((res)=>{
+      console.log("getUser")
+      console.log(res)
+      img.value = res.data.avatar
+      username.value = res.data.userName
+    })
+    let time
+    if(dayjs(dayjs()).diff(dayjs(props.message.time), 'seconds')<60){
+      time=dayjs(dayjs()).diff(dayjs(props.message.time), 'seconds')+"秒前"
+    }else if(dayjs(dayjs()).diff(dayjs(props.message.time), 'minutes')<60){
+      time=dayjs(dayjs()).diff(dayjs(props.message.time), 'minutes')+"分钟前"
+    }else if(dayjs(dayjs()).diff(dayjs(props.message.time), 'hours')<24){
+      time=dayjs(dayjs()).diff(dayjs(props.message.time), 'hours')+"小时前"
+    }else{
+      time=dayjs(dayjs()).diff(dayjs(props.message.time), 'days')+"天前"
+    }
+
+
+    return {
+      time,
+      username,
+      img
+    }
 
   }
 })

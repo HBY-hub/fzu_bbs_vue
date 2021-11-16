@@ -69,7 +69,7 @@ export default defineComponent({
     let passages = ref([])
     axios.get("/getHotPassage",{params:{num:"3",page:"1",theme:""}}).then((res)=>{
       passages.value = res.data.data;
-      console.log(passages)
+      console.log(res.data.data)
     })
 
     const changeTheme = (theme)=>{
