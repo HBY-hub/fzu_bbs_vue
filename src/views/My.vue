@@ -1,10 +1,10 @@
 <template>
   <van-nav-bar title="我的" />
 
-  <div class="user-profile">
+  <div class="user-profile" v-if="user">
     <div class="info">
       <div class="img">
-        <van-uploader :after-read="afterRead" >
+        <van-uploader v-if="user" :after-read="afterRead" >
           <van-image v-if="user.avatar"  round   :src="user.avatar" />
           <van-image v-else width="100%" height="100%" :src="require('../../src/assets/fzu.png')" />
         </van-uploader>
@@ -13,32 +13,32 @@
       </div>
       <van-form>
         <van-field
-            v-model="username"
+            readonly
+            v-model="user.userName"
             name="用户名"
             label="用户名"
             :placeholder="user.userName"
             :rules="[{ required: true, message: '请填写用户名' }]"
         />
         <van-field
-            v-model="number"
+            readonly
+            v-model="user.phone"
             name="学号"
             label="学号"
-            placeholder="学号"
-            :rules="[{ required: true, message: '请填写学号' }]"
         />
         <van-field
-            v-model="introduction"
+            readonly
+            v-model="user.academy"
             name="学院及专业"
             label="学院及专业"
-            :placeholder="user.academy"
-            :rules="[{ required: true, message: '请填写学院及专业' }]"
         />
-        <van-field
-            v-model="introduction"
-            name="个性签名"
-            label="个性签名"
-            placeholder="个性签名"
-        />
+<!--        <van-field-->
+<!--            readonly-->
+<!--            v-model="introduction"-->
+<!--            name="个性签名"-->
+<!--            label="个性签名"-->
+<!--            placeholder="个性签名"-->
+<!--        />-->
       </van-form>
     </div>
 <!--    <van-row>-->
@@ -69,7 +69,7 @@
 <!--  </van-row>-->
   <div class="demo1">
     <van-cell-group class="user-group">
-      <van-cell icon="edit" title="编辑资料" is-link />
+      <van-cell icon="edit" title="编辑资料" is-link to="edit" />
       <van-uploader capture="camera" :after-read="uploadFace">
         <van-cell icon="edit" title="脸部上传"/>
       </van-uploader>

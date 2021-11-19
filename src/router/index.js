@@ -49,6 +49,11 @@ const routes = [
     path: '/passage/:id',
     name: 'passage',
     component:()=>import('../views/Passage')
+  },
+  {
+    path: '/edit',
+    name: 'edit',
+    component:()=>import('../views/Edit')
   }
 ]
 
