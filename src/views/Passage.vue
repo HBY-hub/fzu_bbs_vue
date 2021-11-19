@@ -36,6 +36,16 @@
     </van-col>
     <van-col span="2" />
   </van-row>
+  <van-row >
+    <van-col span="1"/>
+    <van-col span="22">
+      <van-button v-if="ifDelete" style="width: 100%" type="primary" @click="deletePassage">
+        删除文章
+      </van-button>
+    </van-col>
+    <van-col span="1"/>
+  </van-row>
+
 
   <van-button v-if="type==3" @click="addpeople" type="primary">
     参加
@@ -105,7 +115,11 @@ export default defineComponent({
       if(passage.value.theme ==='闲置转让')type.value = 5;
     })
 
+    let ifDelete = ref()
     watch(passage, (newpassage, oldpassage) => {
+      console.log("bug")
+      ifDelete.value = store.state.user.userName===toRaw(unref(newpassage)).userName
+      console.log(ifDelete)
       axios.get("getCommentByPassageId", {params: {"id": id}}).then((res) => {
         console.log("getcommont")
         console.log(res.data.data)
@@ -160,8 +174,15 @@ export default defineComponent({
     }
     let holder = ref("请输入回复")
 
+    const deletePassage=()=>{
+      axios.get("/deletePassageById",{params:{id:id}}).then((res)=>{
+        console.log(res)
+      })
+    }
 
     return {
+      ifDelete,
+      deletePassage,
       addpeople,
       holder,
       peopleList,
