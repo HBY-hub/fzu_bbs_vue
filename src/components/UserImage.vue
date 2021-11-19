@@ -1,6 +1,7 @@
 <template>
   <router-link v-if="user" :to="'/chat/'+user.id">
-    <van-image round fit="fill" :src="user.avatar" />
+    <van-image v-if="user.avatar" round fit="fill" :src="user.avatar" />
+    <van-image v-else width="100%" height="100%" :src="require('../../src/assets/fzu.png')" />
   </router-link>
 </template>
 

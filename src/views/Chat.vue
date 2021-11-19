@@ -4,12 +4,14 @@
     <div id="chatHistory" style="overflow:auto;" :style="{height: scrollerHeight}">
       <van-row v-for="(item, index) in records" :key="index" type="flex" justify="center" style="margin-top: 6%; ">
         <van-col  class="van-col-width"  v-if="item.fromUserId==toUser.id">
-          <van-image style="float: left" width="50" height="50" :src="toUser.avatar"/>
+          <van-image v-if="toUser.avatar" style="float: left" width="50" height="50" :src="toUser.avatar"/>
+          <van-image v-else style="float: left" width="50" height="50" :src="require('../../src/assets/fzu.png')" />
           <van-cell  class="content msgContent left" center :value="item.message" />
         </van-col>
 
         <van-col class="van-col-width" v-else>
-          <van-image style="float: right" width="50" height="50" :src="me.avatar"/>
+          <van-image v-if="me.avatar" style="float: right" width="50" height="50" :src="me.avatar"/>
+          <van-image v-else style="float: right" width="50" height="50" :src="require('../../src/assets/fzu.png')" />
           <van-cell  class="content msgContent right" center :value="item.message"/>
         </van-col>
 

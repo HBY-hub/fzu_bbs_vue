@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="'/passage/'+passage.id">
+  <router-link style="width: 100%" :to="'/passage/'+passage.id">
     <van-row>
       <van-col span="1"/>
       <van-col span="4">

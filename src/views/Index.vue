@@ -36,17 +36,24 @@
         icon="after-sale"
         text="闲置转让"
     />
-    <passage-pre v-for="passage in passages" :passage="passage" :key="passage.id" />
-    <br/>
-    <br/>
-    <br/>
-    <br/>
+    <van-list
+        v-model:loading="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+    >
+      <passage-pre v-for="passage in passages" :passage="passage" :key="passage.id" />
+    </van-list>
+<!--    <br/>-->
+<!--    <br/>-->
+<!--    <br/>-->
+<!--    <br/>-->
 
     <Bottom/>
   </van-grid>
 </template>
 <script>
-import {defineComponent, ref, watch} from "vue";
+import {defineComponent, ref, toRaw, unref, watch} from "vue";
 import PassagePre from "@/components/PassagePre";
 import {useStore} from 'vuex'
 import axios from "axios";
@@ -59,22 +66,40 @@ export default defineComponent({
     console.log(process.env)
     const router = useRouter()
     const store = useStore()
+    const loading = ref(false);
+    const finished = ref(false);
 
-    store.dispatch('getHotPassage',{num:"1",page:"1",theme:""})
     console.log(store.state.passages)
     const typeList = ["失物招领","聊天交友","失物招领","聊天交友","失物招领","聊天交友"];
     for (let i = 0; i < 6; i++) {
       console.log(typeList[i]);
     }
+    let cnt = 1
     let passages = ref([])
-    axios.get("/getHotPassage",{params:{num:"3",page:"1",theme:""}}).then((res)=>{
-      passages.value = res.data.data;
-      console.log(res.data.data)
-    })
+    // axios.get("/getHotPassage",{params:{num:3,page:1,theme:""}}).then((res)=>{
+    //   passages.value = res.data.data;
+    //   console.log(res.data.data)
+    // })
+    let nowtheme = ""
+    const onLoad = ()=>{
+      axios.get("/getHotPassage",{params:{num:3*cnt,page:1,theme:nowtheme}}).then((res)=>{
+        cnt = cnt+1
+        loading.value = false
+        if(res.data.data.length===toRaw(unref(passages)).length){
+          finished.value = true
+          console.log("finish")
+        }
+        else{
+          passages.value = res.data.data;
+        }
+      })
+    }
 
     const changeTheme = (theme)=>{
       console.log(theme)
-      axios.get("/getHotPassage",{params:{num:"3",page:"1",theme:theme}}).then((res)=>{
+      nowtheme = theme
+      axios.get("/getHotPassage",{params:{num:3,page:1,theme:theme}}).then((res)=>{
+        cnt = 1
         passages.value = res.data.data;
       })
     }
@@ -87,6 +112,9 @@ export default defineComponent({
       router.push("/addPassage")
     }
     return{
+      loading,
+      finished,
+      onLoad,
       onClickRight,
       searchValue,
       changeTheme,

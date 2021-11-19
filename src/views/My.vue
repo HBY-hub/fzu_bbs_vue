@@ -70,7 +70,6 @@
   <div class="demo1">
     <van-cell-group class="user-group">
       <van-cell icon="edit" title="编辑资料" is-link />
-      <van-cell icon="setting-o" title="系统设置" is-link />
       <van-uploader capture="camera" :after-read="uploadFace">
         <van-cell icon="edit" title="脸部上传"/>
       </van-uploader>

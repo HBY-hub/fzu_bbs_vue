@@ -3,7 +3,8 @@
     <van-col span="1"/>
     <van-col span="4">
       <router-link :to="'/chat/'+user.id">
-        <van-image round :src="user.avatar" width="50px"/>
+        <van-image v-if="user.avatar" round :src="user.avatar" width="50px"/>
+        <van-image v-else width="100%" height="100%" :src="require('../../src/assets/fzu.png')" />
       </router-link>
     </van-col>
     <van-col span="10">
@@ -24,7 +25,7 @@ export default defineComponent({
     time: Object
   },
   setup(props){
-    const showTime = ref(dayjs(props.time).format("MM-DD-YYYY"))
+    const showTime = ref(dayjs(props.time).format("MM-DD HH:mm"))
     return{
       showTime
     }
@@ -33,5 +34,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
-
+.van-row{
+  width: 100%;
+}
+.a{
+  width: 100%;
+}
 </style>
