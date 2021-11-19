@@ -1,7 +1,9 @@
 <template>
   <van-row class="row">
     <van-col span="6">
-      <van-image height="80px" :src="img"/>
+      <van-image v-if="img" height="80px" :src="img"/>
+      <van-image v-else  height="80px" :src="require('../../src/assets/fzu.png')" />
+
     </van-col>
     <van-col span="18">
       <van-cell :title="username" size="large" :value=time :label="message.message" />
