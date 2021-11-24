@@ -28,13 +28,22 @@
   <van-row>
     <van-col span="2" />
     <van-col span="20">
-      <div v-if= "type==3">
-        <van-tag v-for="people in peopleList" :key="people">
+      <div v-if= "type==3" style="margin: 10px">
+        <van-tag v-for="people in peopleList" style="margin:10px;" type="primary" :key="people">
           {{people}}
         </van-tag>
       </div>
     </van-col>
     <van-col span="2" />
+  </van-row>
+  <van-row >
+    <van-col span="1"/>
+    <van-col span="22">
+      <van-button v-if="type==3" style="width: 100%" @click="addpeople" type="primary">
+        参加
+      </van-button>
+    </van-col>
+    <van-col span="1"/>
   </van-row>
   <van-row >
     <van-col span="1"/>
@@ -47,9 +56,7 @@
   </van-row>
 
 
-  <van-button v-if="type==3" @click="addpeople" type="primary">
-    参加
-  </van-button>
+
   <van-row>
     <van-col span="1"/>
     <van-col span="22">
@@ -154,6 +161,9 @@ export default defineComponent({
     }
     const addpeople = ()=>{
       console.log(store.state.user)
+      if(peopleList.value.find((i)=>i===store.state.user.userName)){
+        return
+      }
       peopleList.value =[...toRaw(unref(peopleList)),store.state.user.userName]
       updateDetail(JSON.stringify({"list":peopleList.value}))
     }

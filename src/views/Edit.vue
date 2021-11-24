@@ -1,8 +1,11 @@
 <template>
   <van-nav-bar
+
       title="编辑"
+      @click-left ="onClickLeft"
+      left-text="返回"
       right-text="完成"
-      @click-right="onClickLeft"
+      @click-right="onClickRight"
   />
   <br>
   <br>
@@ -40,15 +43,19 @@ export default defineComponent({
     const userName =ref()
     const router = useRouter()
 
-    const onClickLeft = ()=>{
+    const onClickRight = ()=>{
       axios.post("/edit",{id:store.state.user.id,phone:phone.value,academy:academy.value,userName:userName.value}).then((res)=>{
         console.log(res)
       })
       router.push('/login')
     }
+    const onClickLeft = ()=>{
+      router.go(-1)
+    }
 
     return{
       onClickLeft,
+      onClickRight,
       phone,
       academy,
       userName
