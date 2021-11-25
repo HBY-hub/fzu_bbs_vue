@@ -17,9 +17,6 @@
   <br>
   <br>
   <van-cell-group inset>
-    <van-field required v-model="userName" label="用户名" placeholder="请输入用户名" />
-  </van-cell-group>
-  <van-cell-group inset>
     <van-field required v-model="phone" label="学号" placeholder="请输入学号" />
   </van-cell-group>
   <van-cell-group inset>
@@ -40,11 +37,10 @@ export default defineComponent({
     const store = useStore()
     const phone = ref()
     const academy = ref()
-    const userName =ref()
     const router = useRouter()
 
     const onClickRight = ()=>{
-      axios.post("/edit",{id:store.state.user.id,phone:phone.value,academy:academy.value,userName:userName.value}).then((res)=>{
+      axios.post("/edit",{id:store.state.user.id,phone:phone.value,academy:academy.value}).then((res)=>{
         console.log(res)
       })
       router.push('/login')
@@ -57,8 +53,7 @@ export default defineComponent({
       onClickLeft,
       onClickRight,
       phone,
-      academy,
-      userName
+      academy
     }
 
 

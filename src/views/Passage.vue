@@ -92,7 +92,7 @@
 <script>
 import {defineComponent, ref, toRaw, unref, watch} from "vue";
 import UserInfo from "@/components/UserInfo";
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import Nav from "@/components/Nav";
 import axios from "axios";
 import Comment from "@/components/Comment";
@@ -105,6 +105,7 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const $route = useRoute()
+    const router = useRouter()
     const id = $route.params.id;
     console.log(id)
     const imageList = ref([])
@@ -125,7 +126,11 @@ export default defineComponent({
     let ifDelete = ref()
     watch(passage, (newpassage, oldpassage) => {
       console.log("bug")
-      ifDelete.value = store.state.user.userName===toRaw(unref(newpassage)).userName
+      if(store.state.user){
+        ifDelete.value = store.state.user.userName===toRaw(unref(newpassage)).userName
+      }else{
+        ifDelete.value = false
+      }
       console.log(ifDelete)
       axios.get("getCommentByPassageId", {params: {"id": id}}).then((res) => {
         console.log("getcommont")
@@ -176,6 +181,7 @@ export default defineComponent({
         console.log(res)
         message.value = ""
       })
+      router.go(0)
     }
     let peopleList = ref([]);
     const setFather = (cid,content)=>{

@@ -22,6 +22,7 @@
           label="用户名"
           placeholder="用户名"
           :rules="[{ required: true, message: '请填写用户名' }]"
+          :error-message=err
       />
       <van-field
           v-model="password"
@@ -43,7 +44,7 @@
 </template>
 <script >
 
-import {defineComponent, ref, toRaw} from "vue";
+import {defineComponent, ref, toRaw, watch} from "vue";
 import {useStore} from "vuex";
 import {useRouter} from 'vue-router'
 import axios from "axios";
@@ -63,9 +64,22 @@ export default defineComponent({
     console.log(toRaw(store.state.user))
     console.log(toRaw(store.state.token))
     const userName = ref('');
+    const err = ref("")
     const password = ref('');
+    watch(userName,(ne,ol)=>{
+      console.log(ne,ol)
+      axios.post("/getUserByName",{"userName":ne}).then((res)=>{
+        console.log(res.data.code)
+        if(res.data.code==400){
+          err.value = "用户名已存在"
+        }else{
+          err.value = ""
+        }
+      })
+    })
 
     const onSubmit = () => {
+      if(err.value!=="")return
       axios.post("/register",{name:userName.value,password:password.value}).then((res)=>{
         console.log(res)
       })
@@ -75,6 +89,7 @@ export default defineComponent({
       userName,
       password,
       onSubmit,
+      err,
     };
   },
 })
