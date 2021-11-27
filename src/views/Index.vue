@@ -98,7 +98,8 @@ export default defineComponent({
     const changeTheme = (theme)=>{
       console.log(theme)
       nowtheme = theme
-      axios.get("/getHotPassage",{params:{num:3,page:1,theme:theme}}).then((res)=>{
+      // passages.value =[]
+      axios.get("/getHotPassage",{params:{num:20,page:1,theme:theme}}).then((res)=>{
         cnt = 1
         passages.value = res.data.data;
       })
