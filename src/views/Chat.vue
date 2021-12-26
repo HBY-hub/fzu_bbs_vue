@@ -62,7 +62,7 @@ export default defineComponent({
 
     console.log(process.env.NODE_ENV)
 
-    const socket = new WebSocket("ws://"+(process.env.NODE_ENV=='development'?"localhost:8010/":"106.13.199.70:8010/")+"chat/"+toRaw(store.state.user).id)
+    const socket = new WebSocket("ws://"+(process.env.NODE_ENV=='development'?"localhost:8010/":"121.36.9.126:8010/")+"chat/"+toRaw(store.state.user).id)
     socket.onopen = ()=>{
       console.log("opennnnnnnnnnn")
     }
